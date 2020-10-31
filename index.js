@@ -46,8 +46,8 @@ fs.readdir('./src/commands/', (err, files) => {
     })
 })
 
-console.log(process.env.TOKEN)
-client.login(process.env.TOKEN);
+
+client.login(process.env.TOKEN).catch(e => console.log(process.env.TOKEN))
 
 const Remind = require('./src/db/remindDB.js')
 client.on('ready', () => {
