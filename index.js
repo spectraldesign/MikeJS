@@ -17,16 +17,16 @@ db.on('error', err => {
 
 
 const client = new Discord.Client()
-const config = require ('./config.json')
-const remindDB = require('./db/remindDB')
-const message = require('./events/message')
+const config = require ('./src/config.json')
+const remindDB = require('./src/db/remindDB')
+const message = require('./src/events/message')
 
 client.config = config  //Load config to client so you can access from everywhere
 
-fs.readdir('./events/', (err, files) => {
+fs.readdir('./src/events/', (err, files) => {
     if (err) return console.error(err)
     files.forEach(file => {
-        const event = require(`./events/${file}`)
+        const event = require(`./src/events/${file}`)
         let eventName = file.split('.')[0]
         client.on(eventName, event.bind(null, client))
     })
@@ -35,11 +35,11 @@ fs.readdir('./events/', (err, files) => {
 
 client.commands = new Enmap()
 
-fs.readdir('./commands/', (err, files) => {
+fs.readdir('./src/commands/', (err, files) => {
     if (err) return console.error(err)
     files.forEach(file => {
         if (!file.endsWith('.js')) return
-        let props = require(`./commands/${file}`)
+        let props = require(`./src/commands/${file}`)
         let commandName = file.split('.') [0]
         console.log(`Attempting to load command ${commandName}`)
         client.commands.set(commandName, props)
@@ -47,9 +47,9 @@ fs.readdir('./commands/', (err, files) => {
 })
 
 
-client.login(process.env.token);
+client.login(process.env.TOKEN);
 
-const Remind = require('./db/remindDB.js')
+const Remind = require('./src/db/remindDB.js')
 client.on('ready', () => {
     client.user.setPresence({
         activity: { name: 'Haskell speedrun', type: 'STREAMING', url: 'https://www.twitch.tv/spectraldesign_' }, 
