@@ -1,9 +1,23 @@
+require ('dotenv').config()
 const Discord = require ('discord.js')
 const Enmap = require('enmap')
 const fs = require('fs')
 
+const mongoose = require('mongoose')
+mongoose.connect('mongodb://127.0.0.1:27017/mikeJS', {useNewUrlParser: true, useUnifiedTopology: true })
+const db = mongoose.connection
+
+db.once('open', _ => {
+    console.log('Database connected.')
+})
+db.on('error', err => {
+    console.error(console, 'Connection error.')
+})
+
+
 const client = new Discord.Client()
 const config = require ('./config.json')
+const remindDB = require('./db/remindDB')
 const message = require('./events/message')
 
 client.config = config  //Load config to client so you can access from everywhere
@@ -32,10 +46,19 @@ fs.readdir('./commands/', (err, files) => {
 })
 
 
-client.login(config.token);
+client.login(process.env.token);
+
+const Remind = require('./db/remindDB.js')
 client.on('ready', () => {
     client.user.setPresence({
         activity: { name: 'Haskell speedrun', type: 'STREAMING', url: 'https://www.twitch.tv/spectraldesign_' }, 
         status: 'active' })
     .catch(console.error);
+
+    setInterval(async () => {
+        let unfinished = await Remind.find({isComplete:false, endTime:{$lte: Date.now()}})
+        unfinished.forEach(remind =>{
+            client.commands.get('remind').undo(client, remind)
+        })
+    },2000)
     });
