@@ -2,6 +2,7 @@ const { Message, MessageEmbed } = require("discord.js")
 const Discord = require('discord.js')
 
 exports.run = (client, message, args) => {
+    if(message.author.id != client.config.ownerID) return message.channel.send("You do not have permission to use this command.")
     if(args.length == 1 && isNumber(args[0])){
         var amount = parseInt(args[0]) 
         amount = amount+1

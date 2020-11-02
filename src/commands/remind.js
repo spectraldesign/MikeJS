@@ -1,25 +1,29 @@
 const Remind = require('../db/remindDB.js')
+const TimeParse = require('../helpFunctions/timeParse.js')
 
 module.exports.run = async (client, message, [time, ...rest]) => {
-    if(rest.length < 1) return message.channel.send("Incorrect use of !remind.\nCorrect usage: `!remind <time in minutes> <message>`")
+    if(rest.length < 1) return errorMessage(client, message)
+
+    let duration = TimeParse.run(message, time)
+    if(typeof duration != 'number'){
+        return
+    }
     
     let authorID = message.author.id
-    let duration = time.match(/\d{1,3}/)
-    if(!duration) return message.channel.send(`Illegal time`)
-    duration = duration[0]
     
     let reminder = new Remind({
         authorID,
         guildID: message.guild.id,
         channelID: message.channel.id,
         duration,
-        endTime: Date.now()+duration*60000,
+        endTime: Date.now()+duration,
         isComplete: false,
         rmessage: rest.join(" ")
     })
 
     reminder.save().catch(err => console.log(err))
-    message.reply(`Reminder set for ${duration} min from now.`)
+    let dateTime = new Date(Date.now()+(duration+(60*60*1000))).toUTCString()+"+1"
+    message.reply(`Reminder set for ${dateTime}.`)
 }
 
 module.exports.undo = async (client, {
@@ -48,3 +52,16 @@ module.exports.undo = async (client, {
         }
     })
 }
+const Discord = require('discord.js')
+function errorMessage(client, message){
+    const embed = new Discord.MessageEmbed()
+                            .setTitle('Wrong usage of !remind')
+                            .setDescription("Proper usage:\n`!remind <XdYhZm> <message>`\nWhere X must be less than 5 years (1825 days), Y less than 24 hours (one day), and Z less than 60 minutes (one hour)\n")
+                            .setFooter("Note: You can use any single of these time units by themselves (example !remind 5h <message>) "+
+                            "or in combination with the other timeunits (example !remind 5d2m <message>), but the precedence must be preserved. Xd must be before Yh and Yh before Zm")
+                            .setColor('#b52121')
+
+    message.channel.send(embed)
+}
+
+

@@ -18,8 +18,6 @@ db.on('error', err => {
 
 const client = new Discord.Client()
 const config = require ('./src/config.json')
-const remindDB = require('./src/db/remindDB')
-const message = require('./src/events/message')
 
 client.config = config  //Load config to client so you can access from everywhere
 
@@ -32,7 +30,6 @@ fs.readdir('./src/events/', (err, files) => {
     })
 })
 
-
 client.commands = new Enmap()
 
 fs.readdir('./src/commands/', (err, files) => {
@@ -41,15 +38,17 @@ fs.readdir('./src/commands/', (err, files) => {
         if (!file.endsWith('.js')) return
         let props = require(`./src/commands/${file}`)
         let commandName = file.split('.') [0]
-        console.log(`Attempting to load command ${commandName}`)
         client.commands.set(commandName, props)
     })
+    console.log('All commands loaded.')
 })
+
 
 
 client.login(process.env.TOKEN).catch(e => console.log(process.env.TOKEN))
 
 const Remind = require('./src/db/remindDB.js')
+const Poll = require('./src/db/pollDB.js')
 client.on('ready', () => {
     client.user.setPresence({
         activity: { name: 'Haskell speedrun', type: 'STREAMING', url: 'https://www.twitch.tv/spectraldesign_' }, 
@@ -57,9 +56,14 @@ client.on('ready', () => {
     .catch(console.error);
 
     setInterval(async () => {
-        let unfinished = await Remind.find({isComplete:false, endTime:{$lte: Date.now()}})
-        unfinished.forEach(remind =>{
+        let unfinishedRemind = await Remind.find({isComplete:false, endTime:{$lte: Date.now()}})
+        unfinishedRemind.forEach(remind =>{
             client.commands.get('remind').undo(client, remind)
+        })
+
+        let unfinishedPoll = await Poll.find({isComplete:false, endTime:{$lte: Date.now()}})
+        unfinishedPoll.forEach(poll =>{
+            client.commands.get('poll').undo(client, poll)
         })
     },2000)
     });

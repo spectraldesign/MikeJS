@@ -1,3 +1,4 @@
-exports.run = (client, message, args) => {
-    message.channel.send('Test successfully completed I suppose.').catch(console.error)
+exports.run = async (client, message, args) => {
+    let msg = await message.channel.send('Test successfully completed I suppose.').catch(console.error)
+    msg.edit(`Test successfully completed I suppose. \`Latency: ${msg.createdAt - message.createdAt}ms\``)
 }
