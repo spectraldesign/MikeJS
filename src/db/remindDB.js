@@ -4,6 +4,7 @@ const remindSchema = mongoose.Schema({
     authorID: String,
     guildID: String,
     channelID: String,
+    messageID: String,
     duration: String,
     endTime: String,
     isComplete: mongoose.Schema.Types.Boolean,
