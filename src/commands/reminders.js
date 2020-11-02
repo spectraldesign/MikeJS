@@ -32,18 +32,29 @@ module.exports.run = async (client, message, [time, ...rest]) => {
         }
     }
 
+    let reminderMap = new Map()
     authorID = message.author.id
-    let reminderList = []
     let reminders = await Remind.find({authorID})
-    reminderList.push(`**All reminders for ${message.author.username}:**`)
+    
     let count = 0
     reminders.forEach(reminder => {
         count += 1
-        let end = (new Date((parseInt(reminder.endTime)+(60*60*1000))).toUTCString()+'+1\n')
-        reminderList.push('**ID:** ' + reminder.messageID + '\n**Message:** ' + reminder.rmessage + '\n**Expires at:** ' + end)
+        reminderMap.set(reminder.endTime, reminder)
     })
+
     if(count == 0){
         return
     }
+
+    var mapAsc = new Map([...reminderMap.entries()].sort())
+
+    let reminderList = []
+    reminderList.push(`**All reminders for ${message.author.username}:**`)
+ 
+    for (let reminder of mapAsc.values()){
+        let end = (new Date((parseInt(reminder.endTime)+(60*60*1000))).toUTCString()+'+1\n')
+        reminderList.push('**ID:** ' + reminder.messageID + '\n**Message:** ' + reminder.rmessage + '\n**Expires at:** ' + end)
+    }
+
     message.author.send(reminderList.join("\n"))
 }
