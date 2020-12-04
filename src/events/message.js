@@ -20,9 +20,11 @@ module.exports = (client, message) => {
     if(command in client.config.languages){
         command = "codeLanguages"
     }
+    if(command == "suicide" || command == "dead") command = "die"
 
     //Grab command data from client.commands Enmap
     const cmd = client.commands.get(command)
+    
     if(!cmd) return
 
     cmd.run(client, message, args)

@@ -70,9 +70,9 @@ module.exports.undo = async (client, {
         }
         else{
             foundObject.isComplete = true
-            message = foundObject.rmessage
-            mention = foundObject.authorID
-            messageID = foundObject.messageID
+            let message = foundObject.rmessage
+            let mention = foundObject.authorID
+            let messageID = foundObject.messageID
             let link = `https://discordapp.com/channels/${guildID}/${channelID}/${messageID}`
             channel.send(`Reminder for <@!${mention}>: ${message}\nLink to original message: ${link}`)
             foundObject.deleteOne(function(err){
