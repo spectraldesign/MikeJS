@@ -21,7 +21,7 @@ module.exports.run = (message) => {
 }
 
 async function execute(message, serverQueue) {
-  const args = message.content.split(" ");
+  const args = message.content.trim().split(/ +/g)
 
   const voiceChannel = message.member.voice.channel;
 
