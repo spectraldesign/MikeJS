@@ -36,7 +36,7 @@ module.exports.run = async (client, message, [time, ...rest]) => {
         })
         poll.save().catch(err => console.log(err))
         embedStart(client, authorID, guildID, channelID, msg.id, false, endTime, restRemove)
-        for(i=1; i<=optionAmount; i++){
+        for(var i=1; i<=optionAmount; i++){
             msg.react(emotes[i])
         }
     }).catch(err => console.log(err))
@@ -86,15 +86,15 @@ function embedStart(client, authorID, guildID, channelID, messageID, isComplete,
     let channel = guild.channels.cache.get(channelID)
     let msg = channel.messages.cache.get(messageID)
     let endTimeString = new Date(endTime+(60*60*1000)).toUTCString()+"+1"
-    color = '#32a862'
-    footer = `✅ Poll open until: ${endTimeString}`
+    let color = '#32a862'
+    let footer = `✅ Poll open until: ${endTimeString}`
 
     //Build the description:
     options = options.split('|')
     const question = options[0]
     options.shift()
     var optionString = ""
-    for(i=0; i<options.length; i++){
+    for(var i=0; i<options.length; i++){
         let unfilled = nofill.repeat(10)
         optionString += `${emotes[i+1]}: ${options[i]}\n${unfilled}0%\n\n`
     }
@@ -105,7 +105,6 @@ function embedStart(client, authorID, guildID, channelID, messageID, isComplete,
                             .setColor(color)
                             .setFooter(footer)
                             .setAuthor(`Poll by: ${guild.members.cache.get(authorID).displayName}`)
-    
     msg.edit(embed)         
 }
 
