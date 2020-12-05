@@ -18,6 +18,31 @@ module.exports.run = (message) => {
     stop(message, serverQueue);
     return;
   }
+  else if (message.content.startsWith(`${prefix}volume`)) {
+    volume(message, serverQueue);
+    return;
+  }
+}
+
+function volume(message, serverQueue){
+  const args = message.content.trim().split(/ +/g)
+  if(args.length >= 1){
+    const vol = args[1]
+    if(!isNaN(parseInt(vol)) && isFinite(vol)){
+      const volInt = parseInt(vol)
+      if(volInt > 100 || volInt < 0){
+        return message.channel.send("Wrong use of !volume, do !volume <int between 0 and 100>")
+      }
+      const dispatcher = serverQueue.connection.dispatcher
+      dispatcher.setVolume(volInt/100)
+      message.channel.send(`Volume set to ${volInt} `)
+    }
+    
+  }
+  else{
+    message.channel.send("Wrong use of !volume, do !volume <int between 0 and 100>")
+  }
+
 }
 
 async function execute(message, serverQueue) {
