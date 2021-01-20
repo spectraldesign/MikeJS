@@ -10,7 +10,7 @@ exports.run = (client, message, args) => {
     
         async function clear() {
             const fetched = await message.channel.messages.fetch({limit: amount});
-            message.channel.bulkDelete(fetched);
+            message.channel.bulkDelete(fetched).catch(console.error);
         }
         clear();
 
