@@ -17,7 +17,7 @@
     "dotenv": "^8.2.0",
     "enmap": "^5.8.0",
     "ffmpeg-static": "^4.2.7",
-    "mongoose": "^5.10.11",
+    "mongoose": "^5.11.12",
     "opusscript": "0.0.7",
     "ytdl-core": "^4.4.2"
   }
