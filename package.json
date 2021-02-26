@@ -19,6 +19,6 @@
     "ffmpeg-static": "^4.2.7",
     "mongoose": "^5.11.12",
     "opusscript": "0.0.7",
-    "ytdl-core": "^4.4.2"
+    "ytdl-core": "^4.5.0"
   }
 }
