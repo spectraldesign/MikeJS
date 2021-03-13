@@ -6,7 +6,7 @@ exports.run = (client, message, args) => {
 
     const embed = new Discord.MessageEmbed()
                             .setTitle(`${user.username}'s avatar:`)
-                            .setImage(user.displayAvatarURL({ dynamic: true }))
+                            .setImage(user.displayAvatarURL({ dynamic: true })+"?size=1024")
     message.channel.send(embed)
 }
 
