@@ -31,3 +31,7 @@ exports.run = (client, message, args) => {
 function isNumber(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
+
+module.exports.conf = {
+    aliases: ['delete', 'remove']
+}

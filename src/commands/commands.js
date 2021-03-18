@@ -14,7 +14,7 @@ exports.run = async (client, message, args) => {
         })
         cmds.push(' ')
         cmds.push('Code Languages:')
-        languages = client.config.languages
+        let languages = client.config.languages
         for (const [key, value] of Object.entries(languages)) {
             cmds.push(client.config.prefix + key + ' <code>')
           }

@@ -15,9 +15,9 @@ module.exports.run = async (client, message, [time, ...rest]) => {
                     }
                     else{
                         message.channel.send(`Deleted reminder with message: ${foundObject.rmessage}.`)
-                        foundObject.deleteOne(function(err){
-                            if(err){
-                                console.log(err)
+                        foundObject.deleteOne(function(e){
+                            if(e){
+                                console.log(e)
                             }
                         })
                     }
@@ -33,7 +33,7 @@ module.exports.run = async (client, message, [time, ...rest]) => {
     }
 
     let reminderMap = new Map()
-    authorID = message.author.id
+    let authorID = message.author.id
     let reminders = await Remind.find({authorID})
     
     let count = 0
@@ -57,4 +57,8 @@ module.exports.run = async (client, message, [time, ...rest]) => {
     }
 
     message.author.send(reminderList.join("\n"))
+}
+
+module.exports.conf = {
+    aliases: ['reminder']
 }

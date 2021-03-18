@@ -23,8 +23,9 @@ module.exports = (client, message) => {
     if(command == "suicide" || command == "dead") command = "die"
 
     //Grab command data from client.commands Enmap
-    const cmd = client.commands.get(command)
+    let cmd = client.commands.get(command)
     
+    if(!cmd) cmd = client.aliases.get(command)
     if(!cmd) return
 
     cmd.run(client, message, args)

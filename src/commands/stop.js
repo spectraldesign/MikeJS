@@ -10,3 +10,7 @@ exports.run = (client, message, args) => {
     if(audioChannel != message.guild.voice.channel) return message.channel.send("We are not in the same VC, so you can't tell me to stop")
     else music.run(message)
 }
+
+module.exports.conf = {
+    aliases: ['leave', 'fuckoff']
+}

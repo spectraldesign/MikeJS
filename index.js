@@ -31,14 +31,17 @@ fs.readdir('./src/events/', (err, files) => {
 })
 
 client.commands = new Enmap()
-
-fs.readdir('./src/commands/', (err, files) => {
+client.aliases = new Enmap()
+fs.readdir('./src/commands/', (err, cmds) => {
     if (err) return console.error(err)
-    files.forEach(file => {
-        if (!file.endsWith('.js')) return
-        let props = require(`./src/commands/${file}`)
-        let commandName = file.split('.') [0]
-        client.commands.set(commandName, props)
+    cmds.forEach(cmd => {
+        if (!cmd.endsWith('.js')) return
+        let rcmd = require(`./src/commands/${cmd}`)
+        let commandName = cmd.split('.') [0]
+        client.commands.set(commandName, rcmd)
+        if(rcmd.conf?.aliases?.length > 0){
+            rcmd.conf.aliases.forEach(alias => client.aliases.set(alias, rcmd))
+        }
     })
     console.log('All commands loaded.')
 })
