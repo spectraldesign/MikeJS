@@ -16,3 +16,11 @@ exports.run = async (client, message, args) => {
 module.exports.conf = {
     aliases: ['kw', 'kiwurd']
 }
+
+const { MessageEmbed } = require('discord.js')
+module.exports.help = () => {
+    let embed = new MessageEmbed()
+	embed.setTitle("!keyword help:")
+	embed.setDescription(`\`!keyword <keyword> <youtube_url>\` | Saves the <youtube_url> as the <keyword> so you can use \`!play <keyword>\` to play <youtube_url>`)
+	return embed
+}

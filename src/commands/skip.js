@@ -13,3 +13,11 @@ exports.run = (client, message, args) => {
 module.exports.conf = {
     aliases: ['next']
 }
+
+const { MessageEmbed } = require('discord.js')
+module.exports.help = () => {
+    let embed = new MessageEmbed()
+	embed.setTitle("!skip help:")
+	embed.setDescription(`\`!skip\` | Skips the currently playing song`)
+	return embed
+}

@@ -62,3 +62,11 @@ module.exports.run = async (client, message, [time, ...rest]) => {
 module.exports.conf = {
     aliases: ['reminder']
 }
+
+const { MessageEmbed } = require('discord.js')
+module.exports.help = () => {
+    let embed = new MessageEmbed()
+	embed.setTitle("!reminders help:")
+	embed.setDescription(`\`!reminders\` | Makes MikeJS dm you a list of your reminders.`)
+	return embed
+}

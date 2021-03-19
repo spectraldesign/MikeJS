@@ -26,4 +26,12 @@ exports.run = (client, message, args) => {
 //See if n can be parsed as integer
 function isNumber(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
-  }
+}
+
+const { MessageEmbed } = require('discord.js')
+module.exports.help = () => {
+    let embed = new MessageEmbed()
+	embed.setTitle("!roll help:")
+	embed.setDescription(`\`!roll <bound>\` | Returns a random number from 1 to <bound>\n\`!roll <number> <bound>\` | Returns <number> amount of random numbers from 1 to <bound>`)
+	return embed
+}

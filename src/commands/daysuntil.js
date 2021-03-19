@@ -31,3 +31,10 @@ module.exports.conf = {
     aliases: ['howlong', 'numdays', 'timeuntil', 'days']
 }
 
+const { MessageEmbed } = require('discord.js')
+module.exports.help = () => {
+    let embed = new MessageEmbed()
+	embed.setTitle("!daysuntil help:")
+	embed.setDescription(`\`!daysuntil <dd.mm.yy>\` | Returns the amount of days until the provided date.`)
+	return embed
+}

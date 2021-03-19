@@ -97,3 +97,12 @@ function errorMessage(client, message){
 }
 
 
+
+const { MessageEmbed } = require('discord.js')
+module.exports.help = () => {
+    let embed = new MessageEmbed()
+	embed.setTitle("!remind help:")
+	embed.setDescription(`\`!remind <XdYhZm> <message>\` | Where X must be less than 5 years (1825 days), Y less than 24 hours (one day), and Z less than 60 minutes (one hour)\n\`!remind remove <messageID>\` | removes reminder set in messageID. \`!reminders\` for a list of reminders.`)
+    .setFooter(`Note: You can use any single of these time units by themselves (example !remind 5h <message>) or in combination with the other timeunits (example \`!remind 5d2m <message>\`), but the precedence must be preserved. Xd must be before Yh and Yh before Zm`)
+	return embed
+}

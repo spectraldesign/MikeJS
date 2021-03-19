@@ -23,3 +23,12 @@ function getUserFromMention(client, mention) {
 		return client.users.cache.get(mention);
 	}
 }
+
+const { MessageEmbed } = require('discord.js')
+
+module.exports.help = () => {
+	let embed = new MessageEmbed()
+	embed.setTitle("!avatar help:")
+	embed.setDescription(`\`!avatar <@user>\` | Returns the @user's profile picture as a 1024x1024 px image`)
+	return embed
+}

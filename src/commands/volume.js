@@ -9,3 +9,11 @@ exports.run = (client, message, args) => {
     if(audioChannel != message.guild.voice.channel) return message.channel.send("We are not in the same VC, so you can't tell me what to do")
     else music.run(message)
 }
+
+const { MessageEmbed } = require('discord.js')
+module.exports.help = () => {
+    let embed = new MessageEmbed()
+	embed.setTitle("!volume help:")
+	embed.setDescription(`\`!volume <vol>\` | Sets the bot playback volume to <vol>. <vol> must be between 0 and 100.`)
+	return embed
+}

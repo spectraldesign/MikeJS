@@ -120,3 +120,13 @@ function errorMessage(client, message){
 
     message.channel.send(embed)
 }
+
+
+module.exports.help = () => {
+    let embed = new MessageEmbed()
+	embed.setTitle("!poll help:")
+	embed.setDescription(`\`!poll <XdYhZm> <question|answer1|answer2|...|answer10>\` | Creates a poll with duration <XdYhZm> using the question and answers provided.\n
+    Note: X must be less than 5 years (1825 days), Y less than 24 hours (one day), and Z less than 60 minutes (one hour)`)
+    embed.setFooter(`Note: You can use any single of these time units by themselves (example !remind 5h <message>) or in combination with the other timeunits (example !remind 5d2m <message>), but the precedence must be preserved. Xd must be before Yh and Yh before Zm`)
+	return embed
+}

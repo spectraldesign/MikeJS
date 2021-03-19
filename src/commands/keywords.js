@@ -15,3 +15,11 @@ exports.run = async (client, message, args) => {
 module.exports.conf = {
     aliases: ['kws', 'kiwurds', 'kwrds', 'listkeyword', 'keywordlist']
 }
+
+
+module.exports.help = () => {
+    let embed = new MessageEmbed()
+	embed.setTitle("!keywords help:")
+	embed.setDescription(`\`!keywords\` | Returns a list of all keywords`)
+	return embed
+}

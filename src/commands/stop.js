@@ -14,3 +14,11 @@ exports.run = (client, message, args) => {
 module.exports.conf = {
     aliases: ['leave', 'fuckoff']
 }
+
+const { MessageEmbed } = require('discord.js')
+module.exports.help = () => {
+    let embed = new MessageEmbed()
+	embed.setTitle("!stop help:")
+	embed.setDescription(`\`!stop\` | Clears the queue and makes the bot leave voice chat.`)
+	return embed
+}

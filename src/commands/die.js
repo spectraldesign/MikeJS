@@ -9,3 +9,11 @@ exports.run = (client, message, args) => {
 module.exports.conf = {
     aliases: ['suicide', 'seppuku', 'sudoku', 'kms']
 }
+
+const { MessageEmbed } = require('discord.js')
+module.exports.help = () => {
+    let embed = new MessageEmbed()
+	embed.setTitle("!die help:")
+	embed.setDescription(`\`!die\` | Grants you the sweet embrace of death.`)
+	return embed
+}

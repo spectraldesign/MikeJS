@@ -22,3 +22,12 @@ exports.run = (client, message, args) => {
 function isNumber(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
+
+
+const { MessageEmbed } = require('discord.js')
+module.exports.help = () => {
+    let embed = new MessageEmbed()
+	embed.setTitle("!lotto help:")
+	embed.setDescription(`\`!lotto\` | Provides you with lotto numbers, following the rules for Norsk Tipping's Lotto`)
+	return embed
+}

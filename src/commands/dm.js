@@ -24,3 +24,11 @@ function getUserFromMention(client, mention) {
 		return client.users.cache.get(mention);
 	}
 }
+
+const { MessageEmbed } = require('discord.js')
+module.exports.help = () => {
+    let embed = new MessageEmbed()
+	embed.setTitle("!dm help:")
+	embed.setDescription(`\`!dm <@user> <message>\` | Sends <message> to <@user> as a dm.`)
+	return embed
+}

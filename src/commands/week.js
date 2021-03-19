@@ -78,3 +78,10 @@ module.exports.conf = {
     aliases: ['w']
 }
 
+const { MessageEmbed } = require('discord.js')
+module.exports.help = () => {
+    let embed = new MessageEmbed()
+	embed.setTitle("!week help:")
+	embed.setDescription(`\`!week <weekNum>\` | Returns the first and last day for any given <weekNum>. <weekNum> must be between 1 and 52.`)
+	return embed
+}

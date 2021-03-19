@@ -6,3 +6,11 @@ exports.run = async (client, message, args) => {
 module.exports.conf = {
     aliases: ['t']
 }
+
+const { MessageEmbed } = require('discord.js')
+module.exports.help = () => {
+    let embed = new MessageEmbed()
+	embed.setTitle("!test help:")
+	embed.setDescription(`\`!test\` | Prints a message, checks API delay.`)
+	return embed
+}

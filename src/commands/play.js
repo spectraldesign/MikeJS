@@ -22,3 +22,11 @@ exports.run = async (client, message, args) => {
         })  
     }
 }
+
+const { MessageEmbed } = require('discord.js')
+module.exports.help = () => {
+    let embed = new MessageEmbed()
+	embed.setTitle("!play help:")
+	embed.setDescription(`\`!play <youtube_url>\` | Plays the song located at <youtube_url>\n\`!play <keyword>\` | Plays the song linked with <keyword>. <keyword> must be from list returned by \`!keywords\``)
+	return embed
+}
