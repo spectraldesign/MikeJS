@@ -4,4 +4,4 @@ Functionality includes:
   - Music playing
   - Polls
   - Reminders
-  - Just look at the list of commands already smh
+  - [Just look at the list of commands already smh](https://github.com/spectraldesign/MikeJS/tree/master/src/commands)
