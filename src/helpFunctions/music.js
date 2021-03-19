@@ -3,11 +3,11 @@ const ytdl = require("ytdl-core");
 const prefix = require("../config.json").prefix
 const { MessageEmbed } = require('discord.js')
 
-module.exports.run = (message) => {
+module.exports.run = (message, url) => {
   const serverQueue = queue.get(message.guild.id);
 
   if (message.content.startsWith(`${prefix}play`)) {
-    execute(message, serverQueue);
+    execute(message, serverQueue, url);
     return;
   } 
   else if (message.content.startsWith(`${prefix}skip`)) {
@@ -45,11 +45,11 @@ function volume(message, serverQueue){
 
 }
 
-async function execute(message, serverQueue) {
+async function execute(message, serverQueue, url) {
   const args = message.content.trim().split(/ +/g)
 
   const voiceChannel = message.member.voice.channel;
-
+  if(url) args[1] = url
   const songInfo = await ytdl.getInfo(args[1]);
   const song = {
         title: songInfo.videoDetails.title,
