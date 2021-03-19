@@ -155,7 +155,12 @@ module.exports.nowPlaying = (message) => {
 module.exports.updateNp = () => {
   if(npList.length == 0) return
   while(npList.length > 1){
-    npList.shift()
+    let np = npList.shift()
+    const embed = new MessageEmbed
+    embed.setTitle(np.song.title)
+    embed.setURL(np.song.url)
+    embed.setDescription("A new !np has been created, no longer updating this")
+    np.msg.edit(embed);
   }
   let np = npList[0]
   let msg = np.msg;
