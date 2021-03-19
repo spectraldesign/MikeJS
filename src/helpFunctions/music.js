@@ -95,6 +95,7 @@ function skip(message, serverQueue) {
 
 function stop(message, serverQueue) {
   serverQueue.songs = [];
+  npList = [];
   serverQueue.connection.dispatcher.end();
 }
 
@@ -132,19 +133,52 @@ module.exports.printQueue = (message) => {
   message.channel.send(embed)
 }
 
+let npList = []
+
 module.exports.nowPlaying = (message) => {
   if(!queue.get(message.guild.id)) return message.channel.send("No music playing.")
   const serverQueue = queue.get(message.guild.id);
   const song = serverQueue.songs[0]
   const dispatcher = serverQueue.connection.dispatcher
-  const currentTime = dispatcher.streamTime / 1000  //How much is played, in int
+  let currentTime = dispatcher.streamTime / 1000  //How much is played, in int
   const fullTime = song.length //How long current song is, in int
-  const bar = createBar(currentTime, fullTime)
+  let bar = createBar(currentTime, fullTime)
   const embed = new MessageEmbed
   embed.setTitle(song.title)
   embed.setURL(song.url)
   embed.setDescription(bar)
-  message.channel.send(embed)
+  message.channel.send(embed).then((msg) => {
+      npList.push({msg: msg, song: song})
+    });
+}
+
+module.exports.updateNp = () => {
+  if(npList.length == 0) return
+  while(npList.length > 1){
+    npList.shift()
+  }
+  let np = npList[0]
+  let msg = np.msg;
+  const serverQueue = queue.get(msg.guild.id);
+  if(np.song === serverQueue.songs[0]){
+    const song = serverQueue.songs[0]
+    const dispatcher = serverQueue.connection.dispatcher
+    let currentTime = dispatcher.streamTime / 1000  //How much is played, in int
+    const fullTime = song.length //How long current song is, in int
+    let bar = createBar(currentTime, fullTime)
+    const embed = new MessageEmbed
+    embed.setTitle(song.title)
+    embed.setURL(song.url)
+    embed.setDescription(bar)
+    msg.edit(embed)
+  }
+  else{
+      embed.setDescription("Song no longer playing.")
+      msg.edit(embed)
+      npList = []
+      return
+  }
+            
 }
 
 function createBar(currentTime, fullTime){

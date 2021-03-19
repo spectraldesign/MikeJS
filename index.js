@@ -52,6 +52,8 @@ client.login(process.env.TOKEN).catch(e => console.log(process.env.TOKEN))
 
 const Remind = require('./src/db/remindDB.js')
 const Poll = require('./src/db/pollDB.js')
+const Music = require('./src/helpFunctions/music')
+
 client.on('ready', () => {
     client.user.setPresence({
         activity: { name: 'Haskell speedrun', type: 'STREAMING', url: 'https://www.twitch.tv/spectraldesign_' }, 
@@ -69,4 +71,10 @@ client.on('ready', () => {
             client.commands.get('poll').undo(client, poll)
         })
     },2000)
-    });
+
+    setInterval(async () => {
+        Music.updateNp()
+    }, 5000)
+});
+
+
