@@ -160,7 +160,7 @@ module.exports.updateNp = () => {
   let np = npList[0]
   let msg = np.msg;
   const serverQueue = queue.get(msg.guild.id);
-  if(np.song === serverQueue.songs[0]){
+  if(np.song === serverQueue?.songs[0]){
     const song = serverQueue.songs[0]
     const dispatcher = serverQueue.connection.dispatcher
     let currentTime = dispatcher.streamTime / 1000  //How much is played, in int
@@ -173,6 +173,9 @@ module.exports.updateNp = () => {
     msg.edit(embed)
   }
   else{
+      const embed = new MessageEmbed
+      embed.setTitle(np.song.title)
+      embed.setURL(np.song.url)
       embed.setDescription("Song no longer playing.")
       msg.edit(embed)
       npList = []
