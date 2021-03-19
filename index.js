@@ -30,6 +30,7 @@ fs.readdir('./src/events/', (err, files) => {
     })
 })
 
+client.commandList = []
 client.commands = new Enmap()
 client.aliases = new Enmap()
 fs.readdir('./src/commands/', (err, cmds) => {
@@ -39,6 +40,7 @@ fs.readdir('./src/commands/', (err, cmds) => {
         let rcmd = require(`./src/commands/${cmd}`)
         let commandName = cmd.split('.') [0]
         client.commands.set(commandName, rcmd)
+        client.commandList.push(commandName)
         if(rcmd.conf?.aliases?.length > 0){
             rcmd.conf.aliases.forEach(alias => client.aliases.set(alias, rcmd))
         }
