@@ -14,7 +14,8 @@ const weatherMap = {
     'partlycloudy_night': ':partly_sunny:',
     'clearsky_night' : ':sunny:',
     'fair_night' : ':white_sun_small_cloud:',
-    'snow' : ':cloud_snow:'
+    'snow' : ':cloud_snow:',
+    'lightrainshowers_night' : ':white_sun_rain_cloud:'
 }
 const positionstack = "475698d03e1914873c67204d7219bcd6"
 
@@ -87,6 +88,9 @@ function getWeather(weatherURL, location, message, client, latLon){
                     let weather = element.data?.next_1_hours?.summary?.symbol_code
                     if(!weather){
                         weather = element.data?.next_6_hours?.summary?.symbol_code
+                        if(!weatherMap.get(weather)){
+                            console.log(weather)
+                        }
                     }
                     weather = weatherMap[weather]
                     string += `${date}: **${temp}°C** ${weather}\n`
