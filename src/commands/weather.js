@@ -24,7 +24,7 @@ exports.run = async (client, message, args) => {
     if(args.length > 0){
         let place = args.join(" ").toLowerCase()
         place = place.replace(/ø/g, 'oe').replace(/æ/g, 'ae').replace(/å/g, 'aa')
-        if(!/^[a-zA-Z]+$/.test(place)){
+        if(!/^[a-zA-Z\s]+$/.test(place)){
             return message.channel.send("Illegal characters in location")
         }
         await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionstack}&query=${place}&output=json`).then(response => {
@@ -40,15 +40,17 @@ exports.run = async (client, message, args) => {
         else{
             lat = Math.round(lat * 100) / 100
             lon = Math.round(lon * 100) / 100
-            getWeather(url+`lat=${lat}&lon=${lon}`, place, message, client)
+            let latLon = `Lat: ${lat}, Lon: ${lon}`
+            getWeather(url+`lat=${lat}&lon=${lon}`, place, message, client, latLon)
         }
     }
     else{
-        getWeather(url+"lat=60.38&lon=5.33", "Bergen", message, client)
+        let latLon = `Lat: 60.38, Lon: 5.33`
+        getWeather(url+"lat=60.38&lon=5.33", "Bergen", message, client, latLon)
     }
 }
 
-function getWeather(weatherURL, location, message, client){
+function getWeather(weatherURL, location, message, client, latLon){
     location = location.replace(/oe/g, 'ø')
     location = location.replace(/ae/g, 'æ')
     location = location.replace(/aa/g, 'å')
@@ -59,7 +61,7 @@ function getWeather(weatherURL, location, message, client){
     }
     axios.get(weatherURL).then(response => {
         let time_series = response.data.properties.timeseries
-        let string = `Weather forecast for ${location}:\n`
+        let string = `Weather forecast for ${location} (${latLon}):\n`
         if(!isForecast){
             let temp = time_series[0].data.instant.details.air_temperature
             let weather = time_series[0].data?.next_1_hours?.summary?.symbol_code
@@ -111,5 +113,5 @@ module.exports.help = () => {
 }
 
 module.exports.conf = {
-    aliases: ['forecast', 'yr', 'værmelding', 'været']
+    aliases: ['forecast', 'yr', 'værmelding', 'været', 'vær', 'værmelding']
 }
