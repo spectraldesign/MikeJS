@@ -1,21 +1,21 @@
 const axios = require('axios');
 const url = "https://api.met.no/weatherapi/locationforecast/2.0/compact?";
 const weatherMap = {
-    'cloudy' : ':cloud:',
-    'heavyrain' : ':cloud_rain:',
-    'fair_day' : ':white_sun_small_cloud:',
-    'clearsky_day' : ':sunny:',
-    'partlycloudy_day' : ':partly_sunny:', 
-    'lightrainshowers_day' : ':white_sun_rain_cloud:',
-    'rainshowers_day' : ':white_sun_rain_cloud:',
-    'lightrain' : ':cloud_rain:',
-    'rain' : ':cloud_rain:',
-    'rainshowers_night': ':white_sun_rain_cloud:',
-    'partlycloudy_night': ':partly_sunny:',
-    'clearsky_night' : ':sunny:',
-    'fair_night' : ':white_sun_small_cloud:',
-    'snow' : ':cloud_snow:',
-    'lightrainshowers_night' : ':white_sun_rain_cloud:'
+    'clearsky_day' : '<:clearsky_day:825045221934628874>',
+    'fair_day' : '<:fair_day:825045221703942174>',
+    'partlycloudy_day' : '<:partlycloudy_day:825045221511266366>', 
+    'cloudy' : '<:cloudy:825045221606686731>',
+    'heavyrain' : '<:heavyrain:825045221750210610>',
+    'lightrainshowers_day' : '<:lightrainshowers_day:825045221783896134>',
+    'rainshowers_day' : '<:rainshowers_day:825045221821120542>',
+    'lightrain' : '<:lightrain:825045221855199242>',
+    'rain' : '<:rain:825045221774458970>',
+    'rainshowers_night': '<:rainshowers_night:825045221862801468>',
+    'partlycloudy_night': '<:partlycloudy_night:825045221855199262>',
+    'clearsky_night' : '<:clearsky_night:825045221720719410>',
+    'fair_night' : '<:fair_night:825045221753880626>',
+    'snow' : '<:snow:825045221900550234>',
+    'lightrainshowers_night' : '<:lightrainshowers_night:825045221800280136>'
 }
 const positionstack = "475698d03e1914873c67204d7219bcd6"
 
@@ -88,7 +88,7 @@ function getWeather(weatherURL, location, message, client, latLon){
                     let weather = element.data?.next_1_hours?.summary?.symbol_code
                     if(!weather){
                         weather = element.data?.next_6_hours?.summary?.symbol_code
-                        if(!weatherMap.get(weather)){
+                        if(!weatherMap[weather]){
                             console.log(weather)
                         }
                     }
