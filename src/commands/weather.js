@@ -22,10 +22,14 @@ exports.run = async (client, message, args) => {
     var lat = ""
     var lon = ""
     if(args.length > 0){
-        let place = args.join(" ")
+        let place = args.join(" ").toLowerCase()
+        place = place.replace(/ø/g, 'oe').replace(/æ/g, 'ae').replace(/å/g, 'aa')
+        if(!/^[a-zA-Z]+$/.test(place)){
+            return message.channel.send("Illegal characters in location")
+        }
         await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionstack}&query=${place}&output=json`).then(response => {
-            lat = response.data.data[0].latitude
-            lon = response.data.data[0].longitude
+            lat = response.data.data[0]?.latitude
+            lon = response.data.data[0]?.longitude
         })
         .catch(error => {
             console.log(error)
@@ -45,6 +49,9 @@ exports.run = async (client, message, args) => {
 }
 
 function getWeather(weatherURL, location, message, client){
+    location = location.replace(/oe/g, 'ø')
+    location = location.replace(/ae/g, 'æ')
+    location = location.replace(/aa/g, 'å')
     location = (location.slice(0,1).toUpperCase() + location.slice(1,))
     let isForecast = false
     if(message.content.slice(client.config.prefix.length).trim().split(/ +/g).slice(0,1) == "forecast"){
@@ -53,13 +60,8 @@ function getWeather(weatherURL, location, message, client){
     axios.get(weatherURL).then(response => {
         let time_series = response.data.properties.timeseries
         let string = `Weather forecast for ${location}:\n`
-        console.log(isForecast)
         if(!isForecast){
             let temp = time_series[0].data.instant.details.air_temperature
-            let date = time_series[0].time.slice(0,10)
-            let dateMo = date.slice(5,7)
-            let dateDa = date.slice(8,)
-            date = `${dateDa}/${dateMo}`
             let weather = time_series[0].data?.next_1_hours?.summary?.symbol_code
             if(!weather){
                 weather = time_series[0].data?.next_6_hours?.summary?.symbol_code
@@ -83,7 +85,6 @@ function getWeather(weatherURL, location, message, client){
                     let weather = element.data?.next_1_hours?.summary?.symbol_code
                     if(!weather){
                         weather = element.data?.next_6_hours?.summary?.symbol_code
-                        console.log(weather)
                     }
                     weather = weatherMap[weather]
                     string += `${date}: **${temp}°C** ${weather}\n`
