@@ -4,7 +4,6 @@ const Enmap = require('enmap')
 const fs = require('fs')
 
 const mongoose = require('mongoose')
-//mongoose.connect('mongodb://127.0.0.1:27017/mikeJS', {useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.connect(process.env.DBTOKEN, {useNewUrlParser: true, useUnifiedTopology: true})
 const db = mongoose.connection
 

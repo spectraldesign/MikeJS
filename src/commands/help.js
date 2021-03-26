@@ -1,13 +1,16 @@
 exports.run = (client, message, args) => {
     if(args.length != 1) return message.channel.send("Wrong use of !help. Proper usage: `!help <command>` where <command> is from the list in <!commands>")
-    let commandName = args[0]
-    if(!(client.commandList.includes(commandName))){
-        return message.channel.send("Command not recognized.")
+    let command = args[0]
+    let cmd = client.commands.get(command)
+    if(!cmd){
+        cmd = client.aliases.get(command)
     }
-    let rcmd = require(`./${commandName}.js`)
-    let isHelp = rcmd?.help
+    if(!cmd){
+        return message.channel.send("Command not recognized")
+    }
+    let isHelp = cmd?.help
     if(!isHelp) return message.channel.send("No help available for this command")
-    message.channel.send(rcmd.help())
+    message.channel.send(cmd.help())
 }
 
 const { MessageEmbed } = require('discord.js')

@@ -20,3 +20,7 @@ function errorMessage(client, message){
 
     message.channel.send(embed)
 }
+
+module.exports.conf = {
+    aliases: ['p', 'j', 'h', 'ass', 'js']
+}

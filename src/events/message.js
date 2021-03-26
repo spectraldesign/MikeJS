@@ -17,11 +17,6 @@ module.exports = (client, message) => {
     const args = message.content.slice(client.config.prefix.length).trim().split(/ +/g)
     var command = args.shift().toLowerCase()
 
-    if(command in client.config.languages){
-        command = "codeLanguages"
-    }
-    if(command == "suicide" || command == "dead") command = "die"
-
     //Grab command data from client.commands Enmap
     let cmd = client.commands.get(command)
     

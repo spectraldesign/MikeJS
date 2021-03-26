@@ -7,7 +7,7 @@ exports.run = (client, message, args) => {
 }
 
 module.exports.conf = {
-    aliases: ['suicide', 'seppuku', 'sudoku', 'kms']
+    aliases: ['suicide', 'seppuku', 'sudoku', 'kms', 'dead']
 }
 
 const { MessageEmbed } = require('discord.js')
