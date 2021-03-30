@@ -8,6 +8,9 @@ exports.run = (client, message, args) => {
         embed.setURL(results[0].link)
         embed.setDescription(results[0].snippet.split('\n')[0] + "...")
         message.channel.send(embed)
+    }).catch(err => {
+        message.channel.send("An error occured!")
+        console.log(err)
     })
 }
 
