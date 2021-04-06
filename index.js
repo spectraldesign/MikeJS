@@ -57,7 +57,7 @@ const Music = require('./src/helpFunctions/music')
 
 client.on('ready', () => {
     client.user.setPresence({
-        activity: { name: 'Haskell speedrun', type: 'STREAMING', url: 'https://www.twitch.tv/spectraldesign_' }, 
+        activity: { name: 'Escape from Tarkov', type: 'STREAMING', url: 'https://www.twitch.tv/trueocelottv' }, 
         status: 'active' })
     .catch(console.error);
 
