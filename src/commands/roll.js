@@ -18,6 +18,13 @@ exports.run = (client, message, args) => {
             string += num + "|"
             number --;
         }
+        if(string.length > 4000){
+            return message.channel.send("Bruh wtf u think u doin stop it, limit is 4k characters for now jfc behave yourself. Avg was " + (total/a) + " though.")
+        }
+        while(string.length > 1999){
+            message.channel.send(string.substring(0, 2000))
+            string = string.substring(2000, )
+        }
         string += "\n" + "Avg: " + (total/a)
         message.channel.send(string);
     }
