@@ -85,7 +85,7 @@ function embedStart(client, authorID, guildID, channelID, messageID, isComplete,
     let guild = client.guilds.cache.get(guildID)
     let channel = guild.channels.cache.get(channelID)
     let msg = channel.messages.cache.get(messageID)
-    let endTimeString = new Date(endTime+(60*60*1000)).toUTCString()+"+1"
+    let endTimeString = new Date(endTime+(2*60*60*1000)).toUTCString()+"+1"
     let color = '#32a862'
     let footer = `✅ Poll open until: ${endTimeString}`
 

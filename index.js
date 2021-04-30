@@ -57,7 +57,7 @@ const Music = require('./src/helpFunctions/music')
 
 client.on('ready', () => {
     client.user.setPresence({
-        activity: { name: 'Escape from Tarkov', type: 'STREAMING', url: 'https://www.twitch.tv/trueocelottv' }, 
+        activity: { name: 'Suffering', type: 'STREAMING', url: 'https://www.twitch.tv/crusher598' }, 
         status: 'active' })
     .catch(console.error);
 

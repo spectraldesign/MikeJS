@@ -51,7 +51,7 @@ module.exports.run = async (client, message, [time, ...rest]) => {
     })
 
     reminder.save().catch(err => console.log(err))
-    let dateTime = new Date(Date.now()+(duration+(60*60*1000))).toUTCString()+"+1"
+    let dateTime = new Date(Date.now()+(duration+(2*60*60*1000))).toUTCString()+"+1"
     message.reply(`Reminder set for ${dateTime}.`)
 }
 
